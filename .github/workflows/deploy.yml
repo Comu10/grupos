@@ -1,0 +1,45 @@
+name: Deploy to Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar script Python
+        run: |
+          cd src
+          python render.py
+
+      - name: Subir archivos a GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: index.html
+
+      - name: Desplegar en GitHub Pages
+        uses: actions/deploy-pages@v4

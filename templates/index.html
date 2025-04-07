@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grupos X</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title has-text-centered">Comunidad X - Grupos</h1>
+
+      {% for salmo in salmos %}
+        <h2 class="subtitle mt-5">{{ salmo }}</h2>
+        <div class="columns is-multiline">
+        {% for grupo in salmos[salmo] %}
+        <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
+          <div class="box">
+            <ul>
+            {% for miembro in grupo %}
+              <li>{{ miembro }}</li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+      {% endfor %}
+
+      </div>
+
+      <h2 class="subtitle mt-6">Figuras</h2>
+      <div class="columns is-multiline">
+
+        {% for palabra in palabras %}
+        <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
+          <div class="box">
+            <h3 class="title is-5">{{ palabra }}</h3>
+            <ul>
+              {% for miembro in palabras[palabra] %}
+              <li>{{ miembro }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+      <h2 class="subtitle mt-6">Eucaristías</h2>
+      <div class="columns is-multiline">
+
+        {% for grupo in eucaristias %}
+        <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
+          <div class="box">
+            <h3 class="title is-5">Grupo {{ loop.index }}</h3>
+            <ul>
+              {% for miembro in grupo %}
+              <li>{{ miembro }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </section>
+</body>
+</html>
