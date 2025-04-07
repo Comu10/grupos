@@ -32,7 +32,7 @@ for eucaristia in data:
 env = Environment(loader=FileSystemLoader("../templates"))
 template = env.get_template("index.html")
 output = template.render(salmos=salmos, palabras=palabras, eucaristias=eucaristias)
-with open("../index.html", "w", encoding='utf-8') as f:
+with open("../public/index.html", "w", encoding='utf-8') as f:
     f.write(output)
 
 
