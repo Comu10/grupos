@@ -1,0 +1,38 @@
+Tengo una lista de personas, algunas de las cuales están emparejadas (por ejemplo: "Joan y Ana" cuenta como 2 personas juntas en una unidad).
+Quiero que me generes 7 rondas de 6 grupos por ronda, mezclando a los participantes de forma aleatoria cada vez, sin repetir unidades dentro de una misma ronda.
+Los grupos deben estar equilibrados en número de personas (grupos de 6 o 7 personas), y quiero el resultado en este formato tipo YML:
+
+Grupo 1:
+- nombres, nombres
+- nombres, nombres
+
+Esta es mi lista de participantes (cada ítem representa 1 o 2 personas, según el caso):
+
+Elena
+Álvaro y Míriam
+Joan y Rocío
+Bruno y Lucía
+Andrés Z
+Guillem
+Clara
+Miquel y Maria
+Joan y Claudia
+Mateo
+Marina
+Dimitri y Marta
+Guillermo
+Cristina
+Joan y Ana
+Myriam
+Sofía
+Marcos y Teresa
+Andrés y Sara
+Manuel
+Adrià y Paloma
+Alejandro
+Pablo
+Álvaro C
+Diego
+Javier
+David y María
+Elías
