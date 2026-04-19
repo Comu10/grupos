@@ -1,0 +1,1519 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#252542" />
+    <meta name="color-scheme" content="light" />
+    <title>Comunidad X — Grupos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <style>
+      :root {
+        --bg: #eef1f7;
+        --surface: #ffffff;
+        --text: #1a1d26;
+        --muted: #5b6475;
+        --accent-euca: #4f46e5;
+        --accent-salmo: #0d9488;
+        --accent-figura: #c2410c;
+        --shadow: 0 4px 24px rgba(26, 29, 38, 0.08);
+        --shadow-hover: 0 8px 32px rgba(26, 29, 38, 0.12);
+        --radius: 12px;
+        --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .page-hero {
+        background: linear-gradient(
+          135deg,
+          #252542 0%,
+          #3730a3 48%,
+          #4338ca 100%
+        );
+        color: #f8fafc;
+        padding: clamp(2rem, 6vw, 3.5rem) 1.5rem;
+        margin-bottom: 0;
+        border-radius: 0 0 var(--radius) var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .page-hero .title {
+        color: inherit;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+      }
+
+      .page-hero .subtitle {
+        color: rgba(248, 250, 252, 0.85);
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+        max-width: 36rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-main {
+        padding: clamp(1.5rem, 4vw, 2.5rem) 1rem 3rem;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem !important;
+        margin-top: 2.25rem !important;
+      }
+
+      .section-heading:first-of-type {
+        margin-top: 0.5rem !important;
+      }
+
+      .section-heading .subtitle {
+        margin-bottom: 0 !important;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      }
+
+      .section-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .section-dot--euca {
+        background: var(--accent-euca);
+      }
+      .section-dot--salmo {
+        background: var(--accent-salmo);
+      }
+      .section-dot--figura {
+        background: var(--accent-figura);
+      }
+
+      .group-card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(26, 29, 38, 0.06);
+        height: 100%;
+        transition:
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .group-card:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-2px);
+      }
+
+      .group-card--euca {
+        border-top: 3px solid var(--accent-euca);
+      }
+      .group-card--salmo {
+        border-top: 3px solid var(--accent-salmo);
+      }
+      .group-card--figura {
+        border-top: 3px solid var(--accent-figura);
+      }
+
+      .group-card .title.is-5 {
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--text);
+      }
+
+      @media (min-width: 769px) {
+        .group-card.box {
+          padding: 1.5rem 1.75rem;
+        }
+      }
+
+      .member-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+
+      .member-tags .tag {
+        max-width: 100%;
+        height: auto;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.35;
+        padding: 0.5em 0.75em;
+      }
+
+      .salmo-title {
+        font-weight: 600;
+        color: var(--text);
+        font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgba(13, 148, 136, 0.25);
+      }
+
+      .salmo-title--first {
+        margin-top: 1.25rem !important;
+      }
+
+      .page-footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      @media (max-width: 768px) {
+        .columns {
+          margin-left: -0.5rem;
+          margin-right: -0.5rem;
+          margin-top: -0.5rem;
+        }
+
+        .columns:not(:last-child) {
+          margin-bottom: 0.75rem;
+        }
+
+        .columns .column {
+          padding: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-hero has-text-centered">
+      <div class="container is-max-desktop">
+        <h1 class="title">Grupos</h1>
+        <p class="subtitle mt-3">
+          Listado de eucaristías, salmos y figuras para la comunidad.
+        </p>
+      </div>
+    </header>
+
+    <main class="section section-main">
+      <div class="container is-max-widescreen">
+        <div class="section-heading">
+          <span class="section-dot section-dot--euca" aria-hidden="true"></span>
+          <h2 class="subtitle">Eucaristías</h2>
+        </div>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 1</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 2</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 3</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 4</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 5</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Miriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 6</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Javier</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo 7</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+
+        
+        <h2
+          class="salmo-title salmo-title--first"
+        >
+          Salmo 33
+        </h2>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 1</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 2</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 3</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Manuel</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 4</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Cristina</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 5</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Míriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 6</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+        
+        <h2
+          class="salmo-title"
+        >
+          Salmo 34
+        </h2>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 1</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Cristina</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 2</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Míriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Manuel</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 3</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 4</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 5</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 6</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+        
+        <h2
+          class="salmo-title"
+        >
+          Salmo 35
+        </h2>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 1</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 2</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 3</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Manuel</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 4</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Míriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 5</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 6</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Cristina</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+        
+        <h2
+          class="salmo-title"
+        >
+          Salmo 36
+        </h2>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 1</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 2</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 3</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 4</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Manuel</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 5</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 6</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Míriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Cristina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+        
+        <h2
+          class="salmo-title"
+        >
+          Salmo 37
+        </h2>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 1</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Cristina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 2</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 3</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Míriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 4</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 5</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo 6</p>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Manuel</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+        
+
+        <div class="section-heading">
+          <span
+            class="section-dot section-dot--figura"
+            aria-hidden="true"
+          ></span>
+          <h2 class="subtitle">Figuras</h2>
+        </div>
+        <div class="columns is-multiline is-mobile">
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">Daniel</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Adrià y Paloma</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés y Sara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Cristina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Alejandro</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">Baruc</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Claudia</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Mateo y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marina</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elías</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">Oseas</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Ana</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro y Míriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Pablo</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Álvaro C</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">Joel</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Dimitri y Marta</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >David y María</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Myriam</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Elena</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Ana J</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">Amós</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Bruno y Lucía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Joan y Rocío</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Sofía</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Manuel</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Guillem</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">Abdías</h3>
+              <div class="member-tags">
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Miquel y Maria</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Marcos y Teresa</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Clara</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Diego</span
+                >
+                
+                <span class="tag is-light is-medium is-rounded"
+                  >Andrés Z</span
+                >
+                
+              </div>
+            </article>
+          </div>
+          
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">Comunidad X</footer>
+  </body>
+</html>

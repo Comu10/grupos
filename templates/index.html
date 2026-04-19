@@ -1,74 +1,299 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Comunidad X</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-  <style>
-    body {
-      overflow-x: hidden;
-    }
-    ul li {
-      word-break: break-word;
-    }
-  </style>
-</head>
-<body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title has-text-centered">Grupos</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#252542" />
+    <meta name="color-scheme" content="light" />
+    <title>Comunidad X — Grupos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <style>
+      :root {
+        --bg: #eef1f7;
+        --surface: #ffffff;
+        --text: #1a1d26;
+        --muted: #5b6475;
+        --accent-euca: #4f46e5;
+        --accent-salmo: #0d9488;
+        --accent-figura: #c2410c;
+        --shadow: 0 4px 24px rgba(26, 29, 38, 0.08);
+        --shadow-hover: 0 8px 32px rgba(26, 29, 38, 0.12);
+        --radius: 12px;
+        --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
 
-      <h2 class="subtitle mt-6">Eucaristías</h2>
-      <div class="columns is-multiline">
-        {% for grupo in eucaristias %}
-          <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
-            <div class="box">
-              <h3 class="title is-5">Grupo {{ loop.index }}</h3>
-              <ul>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .page-hero {
+        background: linear-gradient(
+          135deg,
+          #252542 0%,
+          #3730a3 48%,
+          #4338ca 100%
+        );
+        color: #f8fafc;
+        padding: clamp(2rem, 6vw, 3.5rem) 1.5rem;
+        margin-bottom: 0;
+        border-radius: 0 0 var(--radius) var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .page-hero .title {
+        color: inherit;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+      }
+
+      .page-hero .subtitle {
+        color: rgba(248, 250, 252, 0.85);
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+        max-width: 36rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-main {
+        padding: clamp(1.5rem, 4vw, 2.5rem) 1rem 3rem;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem !important;
+        margin-top: 2.25rem !important;
+      }
+
+      .section-heading:first-of-type {
+        margin-top: 0.5rem !important;
+      }
+
+      .section-heading .subtitle {
+        margin-bottom: 0 !important;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      }
+
+      .section-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .section-dot--euca {
+        background: var(--accent-euca);
+      }
+      .section-dot--salmo {
+        background: var(--accent-salmo);
+      }
+      .section-dot--figura {
+        background: var(--accent-figura);
+      }
+
+      .group-card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(26, 29, 38, 0.06);
+        height: 100%;
+        transition:
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .group-card:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-2px);
+      }
+
+      .group-card--euca {
+        border-top: 3px solid var(--accent-euca);
+      }
+      .group-card--salmo {
+        border-top: 3px solid var(--accent-salmo);
+      }
+      .group-card--figura {
+        border-top: 3px solid var(--accent-figura);
+      }
+
+      .group-card .title.is-5 {
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--text);
+      }
+
+      @media (min-width: 769px) {
+        .group-card.box {
+          padding: 1.5rem 1.75rem;
+        }
+      }
+
+      .member-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+
+      .member-tags .tag {
+        max-width: 100%;
+        height: auto;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.35;
+        padding: 0.5em 0.75em;
+      }
+
+      .salmo-title {
+        font-weight: 600;
+        color: var(--text);
+        font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgba(13, 148, 136, 0.25);
+      }
+
+      .salmo-title--first {
+        margin-top: 1.25rem !important;
+      }
+
+      .page-footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      @media (max-width: 768px) {
+        .columns {
+          margin-left: -0.5rem;
+          margin-right: -0.5rem;
+          margin-top: -0.5rem;
+        }
+
+        .columns:not(:last-child) {
+          margin-bottom: 0.75rem;
+        }
+
+        .columns .column {
+          padding: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-hero has-text-centered">
+      <div class="container is-max-desktop">
+        <h1 class="title">Grupos</h1>
+        <p class="subtitle mt-3">
+          Listado de eucaristías, salmos y figuras para la comunidad.
+        </p>
+      </div>
+    </header>
+
+    <main class="section section-main">
+      <div class="container is-max-widescreen">
+        <div class="section-heading">
+          <span class="section-dot section-dot--euca" aria-hidden="true"></span>
+          <h2 class="subtitle">Eucaristías</h2>
+        </div>
+        <div class="columns is-multiline is-mobile">
+          {% for grupo in eucaristias %}
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--euca">
+              <h3 class="title is-5 mb-4">Grupo {{ loop.index }}</h3>
+              <div class="member-tags">
                 {% for miembro in grupo %}
-                  <li>{{ miembro }}</li>
+                <span class="tag is-light is-medium is-rounded"
+                  >{{ miembro }}</span
+                >
                 {% endfor %}
-              </ul>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-
-      {% for salmo in salmos %}
-        <h2 class="subtitle mt-5">{{ salmo }}</h2>
-        <div class="columns is-multiline">
-          {% for grupo in salmos[salmo] %}
-            <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
-              <div class="box">
-                <ul>
-                  {% for miembro in grupo %}
-                    <li>{{ miembro }}</li>
-                  {% endfor %}
-                </ul>
               </div>
-            </div>
-          {% endfor %}
-        </div> <!-- Cierre del div.columns dentro del for salmo -->
-      {% endfor %}
-
-      <h2 class="subtitle mt-6">Figuras</h2>
-      <div class="columns is-multiline">
-        {% for palabra in palabras %}
-          <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
-            <div class="box">
-              <h3 class="title is-5">{{ palabra }}</h3>
-              <ul>
-                {% for miembro in palabras[palabra] %}
-                  <li>{{ miembro }}</li>
-                {% endfor %}
-              </ul>
-            </div>
+            </article>
           </div>
-        {% endfor %}
-      </div>
+          {% endfor %}
+        </div>
 
-    </div>
-  </section>
-</body>
+        {% for salmo in salmos %}
+        <h2
+          class="salmo-title{% if loop.first %} salmo-title--first{% endif %}"
+        >
+          {{ salmo }}
+        </h2>
+        <div class="columns is-multiline is-mobile">
+          {% for grupo in salmos[salmo] %}
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--salmo">
+              <p class="is-size-7 has-text-grey mb-3">Grupo {{ loop.index }}</p>
+              <div class="member-tags">
+                {% for miembro in grupo %}
+                <span class="tag is-light is-medium is-rounded"
+                  >{{ miembro }}</span
+                >
+                {% endfor %}
+              </div>
+            </article>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+
+        <div class="section-heading">
+          <span
+            class="section-dot section-dot--figura"
+            aria-hidden="true"
+          ></span>
+          <h2 class="subtitle">Figuras</h2>
+        </div>
+        <div class="columns is-multiline is-mobile">
+          {% for palabra in palabras %}
+          <div
+            class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          >
+            <article class="box group-card group-card--figura">
+              <h3 class="title is-5 mb-4">{{ palabra }}</h3>
+              <div class="member-tags">
+                {% for miembro in palabras[palabra] %}
+                <span class="tag is-light is-medium is-rounded"
+                  >{{ miembro }}</span
+                >
+                {% endfor %}
+              </div>
+            </article>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">Comunidad X</footer>
+  </body>
 </html>
